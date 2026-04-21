@@ -4,12 +4,13 @@ import base64
 import hashlib
 import hmac
 import time
-from typing import Any, Optional
+from typing import Any
 
+from bt_api_base.containers.requestdatas.request_data import RequestData
 from bt_api_base.feeds.capability import Capability
 from bt_api_base.feeds.feed import Feed
 from bt_api_base.feeds.http_client import HttpClient
-from bt_api_base.containers.requestdatas.request_data import RequestData
+
 from bt_api_btcturk.exchange_data import BTCTurkExchangeDataSpot
 
 
@@ -34,7 +35,9 @@ class BTCTurkRequestData(Feed):
         self.asset_type = kwargs.get("asset_type", "SPOT")
         self._params = BTCTurkExchangeDataSpot()
         self._params.api_key = kwargs.get("public_key") or kwargs.get("api_key")
-        self._params.api_secret = kwargs.get("private_key") or kwargs.get("api_secret") or kwargs.get("secret_key")
+        self._params.api_secret = (
+            kwargs.get("private_key") or kwargs.get("api_secret") or kwargs.get("secret_key")
+        )
         self._http_client = HttpClient(venue=self.exchange_name, timeout=10)
 
     def _generate_signature(self, timestamp: int) -> str:

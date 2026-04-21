@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from bt_api_base.plugins.protocol import PluginInfo
+
 from bt_api_btcturk.exchange_data import BTCTurkExchangeDataSpot
 
 
@@ -10,7 +11,7 @@ class BTCTurkPlugin:
         return PluginInfo(
             name="btcturk",
             display_name="BTCTurk",
-            version="0.1.0",
+            version="0.1.1",
             supported_asset_types=["SPOT"],
         )
 
@@ -19,3 +20,10 @@ class BTCTurkPlugin:
         if asset_type == "SPOT":
             return BTCTurkExchangeDataSpot()
         raise ValueError(f"Unsupported asset type: {asset_type}")
+
+
+def register_plugin():
+    """Entry point for bt_api plugin system."""
+    from bt_api_btcturk.registry_registration import register_btcturk
+
+    register_btcturk()

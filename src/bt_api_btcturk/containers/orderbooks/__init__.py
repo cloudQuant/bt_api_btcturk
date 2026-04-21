@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from bt_api_base._compat import Self
+if TYPE_CHECKING:
+    from bt_api_base._compat import Self
+
 from bt_api_base.containers.orderbooks.orderbook import OrderBookData
 from bt_api_base.functions.utils import from_dict_get_float
 
@@ -37,7 +39,9 @@ class BTCTurkOrderBookData(OrderBookData):
             return self
 
         if isinstance(self.orderbook_data, dict):
-            data = self.orderbook_data.get("data", {}) if isinstance(self.orderbook_data, dict) else {}
+            data = (
+                self.orderbook_data.get("data", {}) if isinstance(self.orderbook_data, dict) else {}
+            )
             bid_list = data.get("bids", [])
             ask_list = data.get("asks", [])
             self.bids = [

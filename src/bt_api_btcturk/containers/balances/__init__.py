@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from bt_api_base._compat import Self
+if TYPE_CHECKING:
+    from bt_api_base._compat import Self
+
 from bt_api_base.containers.balances.balance import BalanceData
 from bt_api_base.functions.utils import from_dict_get_float
 

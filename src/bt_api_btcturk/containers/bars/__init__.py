@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from bt_api_base._compat import Self
+if TYPE_CHECKING:
+    from bt_api_base._compat import Self
+
 from bt_api_base.containers.bars.bar import BarData
 from bt_api_base.functions.utils import from_dict_get_float
 
@@ -51,7 +53,9 @@ class BTCTurkBarData(BarData):
         if isinstance(klines, list) and len(klines) > 0:
             first = klines[0]
             if isinstance(first, dict):
-                self.open_time = from_dict_get_float(first, "time") or from_dict_get_float(first, "timestamp")
+                self.open_time = from_dict_get_float(first, "time") or from_dict_get_float(
+                    first, "timestamp"
+                )
                 self.open = from_dict_get_float(first, "open")
                 self.high = from_dict_get_float(first, "high")
                 self.low = from_dict_get_float(first, "low")

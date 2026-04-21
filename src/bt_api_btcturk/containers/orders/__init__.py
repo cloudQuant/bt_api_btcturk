@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from bt_api_base._compat import Self
+if TYPE_CHECKING:
+    from bt_api_base._compat import Self
+
 from bt_api_base.containers.orders.order import OrderData
 from bt_api_base.functions.utils import from_dict_get_float, from_dict_get_string
-
 
 _STATUS_MAP = {
     0: "NEW",
@@ -55,7 +56,9 @@ class BTCTurkOrderData(OrderData):
 
         if isinstance(self.order_data, dict):
             data = self.order_data
-            self.order_id = from_dict_get_string(data, "id") or from_dict_get_string(data, "orderId")
+            self.order_id = from_dict_get_string(data, "id") or from_dict_get_string(
+                data, "orderId"
+            )
             raw_status = data.get("status")
             if raw_status is not None:
                 self.status = _STATUS_MAP.get(int(raw_status), str(raw_status))
@@ -66,7 +69,9 @@ class BTCTurkOrderData(OrderData):
             if raw_type is not None:
                 self.order_type = _TYPE_MAP.get(int(raw_type), str(raw_type))
             self.price = from_dict_get_float(data, "price")
-            self.quantity = from_dict_get_float(data, "quantity") or from_dict_get_float(data, "qty")
+            self.quantity = from_dict_get_float(data, "quantity") or from_dict_get_float(
+                data, "qty"
+            )
 
         self.has_been_init_data = True
         return self

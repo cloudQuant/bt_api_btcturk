@@ -4,6 +4,7 @@ import time as _time
 from typing import Any, Optional
 
 from bt_api_base.feeds.capability import Capability
+
 from bt_api_btcturk.feeds.live_btcturk.request_base import BTCTurkRequestData
 
 RequestParams = dict[str, Any]

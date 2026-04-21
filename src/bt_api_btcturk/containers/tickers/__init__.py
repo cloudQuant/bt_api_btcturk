@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from bt_api_base._compat import Self
+if TYPE_CHECKING:
+    from bt_api_base._compat import Self
+
 from bt_api_base.containers.tickers.ticker import TickerData
 from bt_api_base.functions.utils import from_dict_get_float
 
@@ -42,7 +44,9 @@ class BTCTurkTickerData(TickerData):
         if self.has_been_init_data:
             return self
 
-        data = (self.ticker_data or {}).get("data", {}) if isinstance(self.ticker_data, dict) else {}
+        data = (
+            (self.ticker_data or {}).get("data", {}) if isinstance(self.ticker_data, dict) else {}
+        )
         if isinstance(data, list) and len(data) > 0:
             ticker = data[0]
         elif isinstance(data, dict):
